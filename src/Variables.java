@@ -36,6 +36,10 @@ public class Variables {
 		System.out.println(palabra.equalsIgnoreCase("hola mundo"));
 		//trim
 		System.out.println("  Hola   Mundo  ".trim());
+		//replace
+		System.out.println(palabra.replace("Hola", "Chau"));
+		//substring
+		System.out.println(palabra.substring(4));
 		
 	}
 	
