@@ -4,25 +4,25 @@ public class SoloDatosTest {
 
 		SoloDatos sd1 = new SoloDatos();
 
-		sd1.asignarI(1);
+		sd1.setI(1);
 
-		System.out.println(sd1.obtenerI());
+		System.out.println(sd1.getI());
 
-		sd1.asignarB(true);
+		sd1.setB(true);
 
-		System.out.println(sd1.obtenerB());
+		System.out.println(sd1.isB());
 
-		sd1.asignarC('j');
+		sd1.setC('j');
 
-		System.out.println(sd1.obtenerC());
+		System.out.println(sd1.getC());
 
-		sd1.asignarD(47.5);
+		sd1.setD(47.5);
 
-		System.out.println(sd1.obtenerD());
+		System.out.println(sd1.getD());
 
-		sd1.asignarS("Cadena");
+		sd1.setS("Cadena");
 
-		System.out.println(sd1.obtenerS());
+		System.out.println(sd1.getS());
 
 /*
 

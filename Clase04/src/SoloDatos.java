@@ -6,46 +6,78 @@ public class SoloDatos {
 	private boolean b;
 	private char c;
 	private String s;
-	
-	public int obtenerI() {
+	public int getI() {
 		return i;
 	}
-	
-	public void asignarI(int nuevaI) {
-		i = nuevaI;
+	public void setI(int i) {
+		this.i = i;
 	}
-
-	public double obtenerD() {
+	public double getD() {
 		return d;
 	}
-
-	public void asignarD(double nuevaD) {
-		d = nuevaD;
+	public void setD(double d) {
+		this.d = d;
 	}
-
-	public boolean obtenerB() {
+	public boolean isB() {
 		return b;
 	}
-
-	public void asignarB(boolean nuevaB) {
-		b = nuevaB;
+	public void setB(boolean b) {
+		this.b = b;
 	}
-
-	public char obtenerC() {
+	public char getC() {
 		return c;
 	}
-
-	public void asignarC(char nuevaC) {
-		c = nuevaC;
+	public void setC(char c) {
+		this.c = c;
 	}
-
-	public String obtenerS() {
+	public String getS() {
 		return s;
 	}
-
-	public void asignarS(String nuevaS) {
-		s = nuevaS;
+	public void setS(String s) {
+		this.s = s;
 	}
+	
+	
+	
+//	public int obtenerI() {
+//		return i;
+//	}
+//	
+//	public void asignarI(int nuevaI) {
+//		i = nuevaI;
+//	}
+//
+//	public double obtenerD() {
+//		return d;
+//	}
+//
+//	public void asignarD(double nuevaD) {
+//		d = nuevaD;
+//	}
+//
+//	public boolean obtenerB() {
+//		return b;
+//	}
+//
+//	public void asignarB(boolean nuevaB) {
+//		b = nuevaB;
+//	}
+//
+//	public char obtenerC() {
+//		return c;
+//	}
+//
+//	public void asignarC(char nuevaC) {
+//		c = nuevaC;
+//	}
+//
+//	public String obtenerS() {
+//		return s;
+//	}
+//
+//	public void asignarS(String nuevaS) {
+//		s = nuevaS;
+//	}
 
 	
 }
