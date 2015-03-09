@@ -5,9 +5,9 @@ public class SoloDatosTest {
 		
 		SoloDatos sd1 = new SoloDatos();
 		
-		sd1.i = 1;
+		sd1.asignarI(1);
 		
-		System.out.println(sd1.i);
+		System.out.println(sd1.obtenerI());
 		System.out.println(sd1.d);
 		
 		SoloDatos sd2 = sd1;
