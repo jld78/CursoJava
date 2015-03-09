@@ -6,6 +6,7 @@ public class SoloDatos {
 	private boolean b;
 	private char c;
 	private String s;
+	
 	public int getI() {
 		return i;
 	}
