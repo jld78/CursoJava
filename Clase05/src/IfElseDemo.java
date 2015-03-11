@@ -10,11 +10,13 @@ public class IfElseDemo {
 		// }
 		int a = 10;
 
+		System.out.println("Example 1");
 		if (a > 5) {
 			System.out.println("A es mayor a 5");
 		}
 		
-		
+		System.out.println("");
+		System.out.println("Example 2");
 		if(a > 5){
 			System.out.println("A es mayor a 5");
 		} else {
@@ -22,6 +24,8 @@ public class IfElseDemo {
 		}
 		
 		// if{} else if{} ....
+		System.out.println("");
+		System.out.println("Example 3");
 		if(a < 5){
 			System.out.println("A es mayor a 5");
 		} else if (a < 5){
@@ -29,6 +33,24 @@ public class IfElseDemo {
 		} else {
 			System.out.println("A es igual a 5");
 		}
+		
+		System.out.println("");
+		System.out.println("Example 4");
+		int i = 100;
+		if(i > 100)
+			if(i==100)
+				System.out.println("A");
+			//the else is own to more near if
+			else 
+				System.out.println("B");
+		
+		System.out.println("");
+		System.out.println("Example 4");
+		boolean b = false;
+		if(b = true){
+			System.out.println("¡Rebuscado!");
+		}
+			
 
 	}
 	
