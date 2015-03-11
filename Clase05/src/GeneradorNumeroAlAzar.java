@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-
+//Exercise course Java
 public class GeneradorNumeroAlAzar {
 	
 	public static void main(String[] args) {
@@ -40,6 +40,8 @@ public class GeneradorNumeroAlAzar {
 			};
 			condicion = false;
 		};
+		/* Menu End */
+		
 		
 		double azar = Math.round(Math.random()*azarLimit);
 		
@@ -50,14 +52,16 @@ public class GeneradorNumeroAlAzar {
 		do{
 			nro = sc.nextInt();
 			intento++;
-		} while(nro != azar && intento < 4);
+		} while(nro != azar && intento < 3);
 		
-		if(intento == 4){
+		sc.close();
+		
+		if(nro!=azar){
 			System.out.println("No adivino el nro");
 			return;
 		}
 		
-		System.out.println("Correcto");
+System.out.println("Correcto");
 		
 	}
 

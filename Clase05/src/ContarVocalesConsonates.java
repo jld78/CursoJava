@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
-
-public class Ejercicio1 {
+//Exercise course Java
+public class ContarVocalesConsonates {
 
 	public static void main(String[] args) {
 		
