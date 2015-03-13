@@ -8,19 +8,19 @@ public class AdivinarElNro {
 	int[] nro = new int[4];
 		
 	for(int i=0; i<nro.length; i++){
-		nro[i] = (int) (Math.random()*1001);
+		nro[i] = (int) (Math.random()*10+1);
 	}
 	
 	System.out.println("Ingrese cuatro dígitos");
 	
 	Scanner sc = new Scanner(System.in);
-	
-	String line = sc.nextLine();
+
 	
 	int[] arrayUser = new int[4];
 	
 	for(int i=0; i<4; i++){
-		arrayUser[i] = (int) line.charAt(i);
+		int integer = sc.nextInt();
+		arrayUser[i] = integer;
 	}
 	
 	
