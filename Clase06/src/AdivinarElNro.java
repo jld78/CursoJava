@@ -34,7 +34,7 @@ public class AdivinarElNro {
 		while (!sb.toString().equals("XXXX") && intentos > 0){
 			
 			int[] arrayUser = new int[4];
-			respuesta = new String[4];
+			respuesta = new String[]{"","","",""};
 
 			System.out.println("Quedan " + intentos + " ('q' para salir)");
 			
@@ -51,26 +51,76 @@ public class AdivinarElNro {
 				arrayUser[i] = Integer.parseInt(String.valueOf(entrada.charAt(i))); 
 			}
 			
-
+			/* Primera pasada marcar X */
 			for(int j=0; j < nroMaquina.length; j++){
-				boolean iteracionActual = false;
-				for(int i=0; i < nroMaquina.length; i++){
-					if(nroMaquina[j]==arrayUser[i]){
-						if (j == i) {
-							//sb.insert(0, "X");
-							respuesta[j] = "X";
-							//iteracionActual = true;
-						} else {
-							if(respuesta[j] != "X" && !iteracionActual){
-								//sb.append("_");
-								respuesta[j] = "_";
-							}
-							//iteracionActual = true;
-						}
-						iteracionActual = true;
-					}	
+				if(nroMaquina[j]==arrayUser[j]){
+					respuesta[j] = "X";
 				}
 			}
+			
+			/*  
+			 * Segunda pasada _
+			 * 
+			*/
+			
+			/* En el peor de los casos dos nros repetidos */
+//			int a = 0;
+//			int b = 0;
+//			for(int j=0; j < nroMaquina.length; j++){
+//				for(int k=0; k<nroMaquina.length; k++){
+//					if(j != k && nroMaquina[j] == nroMaquina[k] && !respuesta[j].equals("X") 
+//							&& !respuesta[k].equals("X")){
+//						if(nroMaquina[k] != a){
+//							a = nroMaquina[k];
+//						} else {
+//							b = nroMaquina[k];
+//						}
+//					}
+//				}
+//			}
+			
+			int a=0;
+			int b=0;
+			for(int i=0; i < nroMaquina.length; i++){
+				if(respuesta[i] == null && !respuesta[i].equals("X")){
+					if(a != nroMaquina[i]){
+						a = nroMaquina[i];
+					} else if(b != nroMaquina[i]){
+						b = nroMaquina[i];
+					} else {
+						continue;
+					}
+					for(int j=0; j<arrayUser.length; j++){
+						if(!respuesta[j].equals("X")){
+							if(nroMaquina[i] == arrayUser[j]){
+								respuesta[i] = "_";
+							}
+						} else {
+							continue;
+						}
+					}
+				}
+			}
+
+//			for(int j=0; j < nroMaquina.length; j++){
+//				boolean iteracionActual = false;
+//				for(int i=0; i < nroMaquina.length; i++){
+//					if(nroMaquina[j]==arrayUser[i]){
+//						if (j == i) {
+//							//sb.insert(0, "X");
+//							respuesta[j] = "X";
+//							//iteracionActual = true;
+//						} else {
+//							if(respuesta[j] != "X" && !iteracionActual){
+//								//sb.append("_");
+//								respuesta[j] = "_";
+//							}
+//							//iteracionActual = true;
+//						}
+//						iteracionActual = true;
+//					}	
+//				}
+//			}
 			System.out.println("Fin del bucle");
 			//System.out.println(sb.toString());
 			for(int i=0; i < respuesta.length; i++){
