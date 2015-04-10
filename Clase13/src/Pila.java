@@ -11,8 +11,9 @@ public class Pila {
 		return pila;
 	}
 	
-	public void poner(String cadena){
+	public boolean poner(String cadena){
 		pila.add(cadena);
+		return true;
 	}
 	
 	public String sacar(){
