@@ -8,7 +8,6 @@ public class Test {
 
 	public static void main(String[] args) {
 		
-		Ordenable[] ordenados;
 		
 		Libro[] libros = {
 				new Libro("Libro A", 345),
@@ -21,11 +20,13 @@ public class Test {
 				new Libro("Libro H", 432)
 		};
 		
-		ordenados  = Ordenador.ordenar(libros);
 		
-		for (Ordenable ordenable : ordenados) {
-			System.out.println(ordenable);
+		Ordenador.ordenar(libros);
+		
+		for (Libro libro : libros) {
+			System.out.println(libro);
 		}
+		
 		
 		
 		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -39,10 +40,10 @@ public class Test {
 			};
 		
 		
-		ordenados  = Ordenador.ordenar(peliculas);
+		Ordenador.ordenar(peliculas);
 		
-		for(int i = 0; i < ordenados.length; i++){
-			System.out.println(ordenados[i]);
+		for (Pelicula pelicula : peliculas) {
+			System.out.println(pelicula);
 		}
 		
 		
