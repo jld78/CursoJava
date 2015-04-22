@@ -23,6 +23,7 @@ public class AhorcadoSwing {
 
 	private JFrame frame;
 	private JPanel panelPalabra;
+	JPanel panelTeclado;
 	
 	String palabra;
 	 
@@ -85,12 +86,12 @@ public class AhorcadoSwing {
 		menuBar.add(mntmAyuda);
 		frame.getContentPane().setLayout(null);
 		
-		JPanel panelTeclado = new JPanel();
+		panelTeclado = new JPanel();
 		panelTeclado.setBounds(256, 163, 342, 169);
 		frame.getContentPane().add(panelTeclado);
 		panelTeclado.setLayout(new GridLayout(5, 6, 0, 0));
 		
-		generarTeclado(panelTeclado);
+		generarTeclado();
 		
 		JLabel lblNewLabel = new JLabel("Image");
 		lblNewLabel.setBackground(Color.CYAN);
@@ -114,6 +115,9 @@ public class AhorcadoSwing {
 	}
 	
 	private void generarPalabraAhorcado(){
+		panelTeclado.removeAll();
+		generarTeclado();
+		panelTeclado.validate();
 		panelPalabra.removeAll();
 		if(palabra != null && !palabra.equals("")){
 			for(int i=0; i<palabra.length(); i++){
@@ -124,12 +128,12 @@ public class AhorcadoSwing {
 		}
 	}
 	
-	private void generarTeclado(JPanel jp){
+	private void generarTeclado(){
 		PressTeclado pt = new PressTeclado();
 		for(int i=0; i<26; i++){
 			JButton jb = new JButton(String.valueOf((char)(i+65)));
 			jb.addActionListener(pt);
-			jp.add(jb);
+			panelTeclado.add(jb);
 		}
 	}
 	
