@@ -1,0 +1,4 @@
+palabra
+tecnologia
+java
+linux
