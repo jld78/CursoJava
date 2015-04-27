@@ -35,13 +35,25 @@ public class FileUtils {
 			}
 		});
 		
-		if (files != null) {
+		if(files != null){
 			for (File file : files) {
 				archivos.add(file.getAbsolutePath());
 			}
+		
+			files = dirRoot.listFiles();
+		
+			for (File file : files) {
+				if(file.isDirectory()){
+					archivos.addAll(buscarArchivos(file.getAbsolutePath(), archivo));
+					System.out.println("Llamando");
+				}
+			}
+		}
+		
+		for (String res : archivos) {
+			System.out.println(res);
 		}
 		
 		return archivos;
 	}
-	
 }

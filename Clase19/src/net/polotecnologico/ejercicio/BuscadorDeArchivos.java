@@ -14,6 +14,7 @@ import javax.swing.JButton;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JScrollBar;
 
 public class BuscadorDeArchivos {
 
@@ -22,6 +23,7 @@ public class BuscadorDeArchivos {
 	private JTextArea txtResultado;
 	
 	private String unidad;
+	private final JTextArea textArea = new JTextArea();
 
 	/**
 	 * Launch the application.
@@ -51,7 +53,7 @@ public class BuscadorDeArchivos {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 592, 310);
+		frame.setBounds(100, 100, 595, 309);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -74,11 +76,6 @@ public class BuscadorDeArchivos {
 		
 		System.out.println(unidad);
 		
-		txtResultado = new JTextArea();
-		txtResultado.setBounds(6, 82, 570, 190);
-		frame.getContentPane().add(txtResultado);
-
-		
 		txtBuscar = new JTextField();
 		txtBuscar.setBounds(192, 31, 249, 20);
 		frame.getContentPane().add(txtBuscar);
@@ -89,7 +86,8 @@ public class BuscadorDeArchivos {
 			public void actionPerformed(ActionEvent e) {
 				txtResultado.removeAll();
 				txtResultado.validate();
-				ArrayList<String> resultado = FileUtils.buscarArchivos(unidad, txtBuscar.getText());
+//				ArrayList<String> resultado = FileUtils.buscarArchivos(unidad, txtBuscar.getText());
+				ArrayList<String> resultado = FileUtils.buscarArchivos("/home/alien", txtBuscar.getText());
 				for (String string : resultado) {
 					txtResultado.append(string + "\n");
 				}
@@ -97,5 +95,13 @@ public class BuscadorDeArchivos {
 		});
 		btnBuscar.setBounds(455, 30, 89, 23);
 		frame.getContentPane().add(btnBuscar);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(46, 75, 498, 186);
+		frame.getContentPane().add(scrollPane);
+		
+		txtResultado = new JTextArea();
+		scrollPane.setViewportView(txtResultado);
+		
 	}
 }
