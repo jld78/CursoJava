@@ -17,6 +17,11 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+
 public class SQLManager {
 
 	private JFrame frmSqlmaster;
@@ -103,6 +108,19 @@ public class SQLManager {
 		panelConn.add(labelPuerto);
 		
 		JButton buttonConectar = new JButton("Conectar");
+		buttonConectar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				try {
+					Class.forName("org.apache.derby.jdbc.ClientDriver");
+					String conexionUrl = "jdbc:derby://" + textHost.getText() + ":" + textPuerto + "" 
+					Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/test", "app", "app");
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 		buttonConectar.setBounds(46, 181, 77, 23);
 		panelConn.add(buttonConectar);
 		
