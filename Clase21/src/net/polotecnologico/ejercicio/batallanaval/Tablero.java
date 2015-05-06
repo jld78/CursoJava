@@ -28,12 +28,33 @@ public class Tablero {
 		matriztablero[fila][col] = estado;
 	}
 	
+	/**
+	 * Inicializa el tablero poniendo el estado de todos
+	 *  los casilleros a Agua
+	 * 
+	 */
 	private void inicializarTablero(){
 		for (Estado[] estados : matriztablero) {
 			for (Estado estado : estados) {
 				estado = Estado.Agua;
 			}
 		}
+	}
+	
+	
+	/**
+	 * Verifica si existe algun casillero activo
+	 * 
+	 */
+	public boolean juegoTerminado(){
+		for (Estado[] estados : matriztablero) {
+			for (Estado estado : estados) {
+				if(estado == Estado.Activo){
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 	
 }

@@ -2,14 +2,32 @@ package net.polotecnologico.ejercicio.batallanaval;
 
 public class Juego {
 	
+	private static final int DEFAULT_FILASYCOLUMNAS = 100;
+	private static final int DEFAULT_CASILLASEMB = 20;
+
+	private static Juego instance= null;
+	
 	private Jugador jugador1;
 	private Jugador jugador2;
 	
-	private boolean jugando = false;
+	static int tableroFilas = DEFAULT_FILASYCOLUMNAS;
+	static int tableroColumnas = DEFAULT_FILASYCOLUMNAS;
+	static int casillasEmb = DEFAULT_CASILLASEMB;
+	static boolean jugando = false;
+	static Jugador turno;
+	private Jugador actualizar;
 	
-	public Juego() {
-		Jugador jugador1 = new JugadorHumano();
-		Jugador jugador2 = new JugadorHumano();
+	private Juego() {
+		Jugador jugador1 = new JugadorHumano(casillasEmb);
+		Jugador jugador2 = new JugadorHumano(casillasEmb);
+		turno = jugador1;
+	}
+	
+	public static Juego getInstance() {
+		if(instance == null){
+			instance = new Juego();
+		}
+		return instance;
 	}
 	
 	public Jugador getJugador1() {
@@ -20,6 +38,10 @@ public class Juego {
 		return jugador2;
 	}
 	
+	public Jugador getActualizar() {
+		return actualizar;
+	}
+	
 	public boolean isJugando() {
 		return jugando;
 	}
@@ -28,15 +50,12 @@ public class Juego {
 		this.jugando = jugando;
 	}
 	
-	public boolean agregarEmbarcacion(int fila, int columna, Jugador jugador){
-		if(!jugando){
-			return jugador.addEmbarcacion(fila, columna);
-		}else{
-			return false;
-		}
+	public String disparar(int fila, int columna, Jugador origen, Jugador destino){
+		
+		Estado estado = origen.disparar(fila, columna, destino);
+		actualizar = destino;
+		
+		return estado.toString();
 	}
 	
-	public Estado disparar(int fila, int columna, Jugador jugador){
-		
-	}
 }
