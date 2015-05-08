@@ -2,20 +2,45 @@ package net.polotecnologico.ejercicio.batallanaval;
 
 import java.util.ArrayList;
 
-public class Jugador {
+public abstract class Jugador {
 
 
 	private Tablero tablero;
 	private Tablero tableroControl;
-	int casillas;
+	private int casillas;
 	
-	int disparoFila;
-	int disparoColumna;
+	private int disparoFila;
+	private int disparoColumna;
+	private Boolean disparado = false;
 
-	public Jugador() {
+	public Jugador(int casillasEmbarc) {
 		this.tablero = new Tablero();
 		this.tableroControl = new Tablero();
-		this.casillas = 20;
+		this.casillas = casillasEmbarc;
+	}
+	
+	public Boolean getDisparado() {
+		return disparado;
+	}
+	
+	public void setDisparado(Boolean disparado) {
+		this.disparado = disparado;
+	}
+
+	public int getDisparoFila() {
+		return disparoFila;
+	}
+	
+	public void setDisparoFila(int disparoFila) {
+		this.disparoFila = disparoFila;
+	}
+	
+	public int getDisparoColumna() {
+		return disparoColumna;
+	}
+	
+	public void setDisparoColumna(int disparoColumna) {
+		this.disparoColumna = disparoColumna;
 	}
 	
 	/**
@@ -49,24 +74,6 @@ public class Jugador {
 		return false;
 	}
 
-	/**
-	 *  Llama al metodo privado recibir disparo del
-	 *   objeto jugador objetivo
-	 * 
-	 * @param fila
-	 * @param columna
-	 * @param jugador
-	 * @return
-	 */
-	public Estado disparar(int fila, int columna, Jugador jugador) {
-		if (this == Juego.turno) {
-			Juego.turno = jugador;
-			this.disparoFila = fila;
-			this.disparoColumna = columna;
-			return jugador.recibirDisparo(fila, columna);
-		}
-		return null;
-	}
 
 	/**
 	 * Verifica el estado del casillero objetivo,
@@ -78,7 +85,7 @@ public class Jugador {
 	 * @param columna
 	 * @return
 	 */
-	private Estado recibirDisparo(int fila, int columna) {
+	public Estado recibirDisparo(int fila, int columna) {
 		Estado estado = tablero.getPosicion(fila, columna);
 		switch (estado) {
 		case Activo:
@@ -87,12 +94,15 @@ public class Jugador {
 			if(tablero.juegoTerminado()){
 				estado = Estado.Derrotado;
 			}
-			return estado;
+			break;
 		case Agua:
-			return Estado.Agua;
+			estado = Estado.Agua;
+			break;
 		default:
-			return estado;
+			
 		}
+		disparado = true;
+		return estado;
 	}
 	
 	/**
@@ -163,7 +173,7 @@ public class Jugador {
 	
 	/**
 	 * Si todas las partes de la nave estan 
-	 *  averiadas cambia su eatado a hundida
+	 *  averiadas cambia su estado a hundida
 	 * 
 	 * @param embarcacion
 	 */
@@ -174,4 +184,7 @@ public class Jugador {
 			tablero.setPosicion(fila, columna, Estado.Hundido);
 		}
 	}
+	
+	public abstract Estado disparar(Jugador oponente);
+	
 }

@@ -1,61 +1,38 @@
 package net.polotecnologico.ejercicio.batallanaval;
 
+import java.io.IOException;
+import java.net.ServerSocket;
+
 public class Juego {
 	
-	private static final int DEFAULT_FILASYCOLUMNAS = 100;
 	private static final int DEFAULT_CASILLASEMB = 20;
-
-	private static Juego instance= null;
+	private static final int MAX_CONN = 2;
 	
-	private Jugador jugador1;
-	private Jugador jugador2;
-	
-	static int tableroFilas = DEFAULT_FILASYCOLUMNAS;
-	static int tableroColumnas = DEFAULT_FILASYCOLUMNAS;
-	static int casillasEmb = DEFAULT_CASILLASEMB;
 	static boolean jugando = false;
 	static Jugador turno;
-	private Jugador actualizar;
 	
-	private Juego() {
-		Jugador jugador1 = new JugadorHumano(casillasEmb);
-		Jugador jugador2 = new JugadorHumano(casillasEmb);
-		turno = jugador1;
-	}
-	
-	public static Juego getInstance() {
-		if(instance == null){
-			instance = new Juego();
+	public static void main(String[] args) {
+
+		try (ServerSocket servidor = new ServerSocket(4444)) {
+
+			int conexiones = 0;
+			Jugador jugador1 = new JugadorHumano(DEFAULT_CASILLASEMB);
+			Jugador  jugador2 = new JugadorMaquina(DEFAULT_CASILLASEMB);
+			while (conexiones < MAX_CONN) {
+				if (conexiones == 0) {
+					new JuegoThread(servidor.accept(),
+							jugador1, jugador2).start();
+				} else {
+					new JuegoThread(servidor.accept(), 
+							jugador2, jugador1).start();
+				}
+
+			}
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		return instance;
-	}
-	
-	public Jugador getJugador1() {
-		return jugador1;
-	}
-	
-	public Jugador getJugador2() {
-		return jugador2;
-	}
-	
-	public Jugador getActualizar() {
-		return actualizar;
-	}
-	
-	public boolean isJugando() {
-		return jugando;
-	}
-	
-	public void setJugando(boolean jugando) {
-		this.jugando = jugando;
-	}
-	
-	public String disparar(int fila, int columna, Jugador origen, Jugador destino){
-		
-		Estado estado = origen.disparar(fila, columna, destino);
-		actualizar = destino;
-		
-		return estado.toString();
 	}
 	
 }
