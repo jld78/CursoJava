@@ -48,7 +48,7 @@ public class UsuarioDAOJDBC implements UsuarioDAO{
 
 	@Override
 	public int deleteByID(Integer id) throws SQLException {
-		String sql = "DELETE FROM USUARIO WHERE id =" + id;
+		String sql = "DELETE FROM usuarios WHERE id =" + id;
 		return updateConsulta(sql);
 	}
 

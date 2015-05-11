@@ -170,6 +170,7 @@ public class DAOForm {
 					if(usuarios.size() > 0){
 						if(usuarios.size() == 1){
 							llenarFormulario(usuarios.get(0));
+							btnBorrar.setEnabled(true);
 						}else{
 							for (Usuario usuario : usuarios) {
 								textResultado.append(
