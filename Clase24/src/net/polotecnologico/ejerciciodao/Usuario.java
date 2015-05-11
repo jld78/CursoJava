@@ -8,6 +8,7 @@ public class Usuario {
 	private String email;
 	
 	public Usuario(Integer id, String nombre, String clave, String email) {
+		this.id = id;
 		this.nombre = nombre;
 		this.clave = clave;
 		this.email = email;

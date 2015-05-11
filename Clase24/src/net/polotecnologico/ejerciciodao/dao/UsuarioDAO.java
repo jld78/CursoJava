@@ -1,16 +1,19 @@
 package net.polotecnologico.ejerciciodao.dao;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import net.polotecnologico.ejerciciodao.Usuario;
 
 public interface UsuarioDAO {
 
-	int update(Usuario usuario);
-	int delete(Usuario usuario);
-	int deleteByNombre(String nombre);
-	int deleteByID(Integer id);
-	ArrayList<Usuario> getUsuarioByName(String nombre);
-	Usuario getUsuarioById(Integer id);
+	void crearTabla() throws SQLException;
+	int create(Usuario usuario) throws SQLException;
+	int update(Usuario usuario) throws SQLException;
+	int delete(Usuario usuario) throws SQLException;
+	int deleteByNombre(String nombre) throws SQLException;
+	int deleteByID(Integer id) throws SQLException;
+	ArrayList<Usuario> getUsuarioByName(String nombre) throws SQLException;
+	Usuario getUsuarioById(Integer id) throws SQLException;
 	
 }

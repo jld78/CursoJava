@@ -1,20 +1,33 @@
 package net.polotecnologico.ejerciciodao.dao;
 
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Properties;
 
 import net.polotecnologico.ejerciciodao.Usuario;
 
 public class UsuarioDAOJDBC implements UsuarioDAO{
+	
+	@Override
+	public int create(Usuario usuario) throws SQLException{
+		String sql = "INSERT INTO usuarios(nombre, clave, email) VALUES('" + 
+				usuario.getNombre() + 
+				"','" + usuario.getClave()+ 
+				"','" + usuario.getEmail() + 
+				"')";
+		return updateConsulta(sql);
+	}	
 
 	@Override
-	public int update(Usuario usuario) {
+	public int update(Usuario usuario) throws SQLException {
 		String sql = "UPDATE USUARIOS SET " + 
-				"name='" + usuario.getNombre() + 
+				"nombre='" + usuario.getNombre() + 
 				"', clave='" + usuario.getClave()+ 
 				"', email='" + usuario.getEmail() + 
 				"' WHERE id=" + usuario.getId();
@@ -22,124 +35,121 @@ public class UsuarioDAOJDBC implements UsuarioDAO{
 	}
 
 	@Override
-	public int delete(Usuario usuario) {
+	public int delete(Usuario usuario) throws SQLException {
 		String sql = "DELETE FROM USUARIO WHERE id=" + usuario.getId();
 		return updateConsulta(sql);
 	}
 
 	@Override
-	public int deleteByNombre(String nombre) {
+	public int deleteByNombre(String nombre) throws SQLException {
 		String sql = "DELETE FROM USUARIO WHERE nombre LIKE '%" + nombre + "%'";
 		return updateConsulta(sql);
 	}
 
 	@Override
-	public int deleteByID(Integer id) {
+	public int deleteByID(Integer id) throws SQLException {
 		String sql = "DELETE FROM USUARIO WHERE id =" + id;
 		return updateConsulta(sql);
 	}
 
 	@Override
-	public ArrayList<Usuario> getUsuarioByName(String nombre) {
+	public ArrayList<Usuario> getUsuarioByName(String nombre) throws SQLException {
 		String sql = "SELECT * FROM usuarios WHERE nombre LIKE '%" + nombre + "%'";
-		ResultSet rs = selectConsulta(sql);
-		
-		if(rs != null){
-			ArrayList<Usuario> usuarios = new ArrayList<>();
-			try {
-				while(rs.next()){
-					Integer uId = rs.getInt("id");
-					String uNombre = rs.getString("name");
-					String uClave = rs.getString("clave");
-					String uEmail = rs.getString("email");
-
-					usuarios.add(new Usuario(uId, uNombre, uClave, uEmail));
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			return usuarios;
-			
-		}
-		return null;
+		return selectConsulta(sql);
 	}
 
 	@Override
-	public Usuario getUsuarioById(Integer id) {
+	public Usuario getUsuarioById(Integer id) throws SQLException {
 		String sql = "SELECT * FROM usuarios WHERE id=" + id;
-		
-		ResultSet rs = selectConsulta(sql);
-		
-		try {
-			if (rs != null) {
-				if(rs.next()){
-					Integer uId = rs.getInt("id");
-					String uNombre = rs.getString("name");
-					String uClave = rs.getString("clave");
-					String uEmail = rs.getString("email");
-					
-					Usuario usuario = new Usuario(uId, uNombre, uClave, uEmail);
-					
-					return usuario;
-				}
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return null;
+		return selectConsulta(sql).get(0);
+
 	}
 
-	private Connection getConnection(){
+	private Connection getConnection() throws SQLException{
 		
 		try {
-			Class.forName("org.apache.derby.client");
-			Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/test", "app", "app");
+			Properties prop = new Properties();
+			prop.load(new FileReader("db.properties"));
+			String driverClass = prop.getProperty("driverClass");
+			String urlDatabase = prop.getProperty("urlDatabase");
+			String dbUsuario = prop.getProperty("dbUsuario");
+			String dbPassword = prop.getProperty("dbPassword");
+			
+			Class.forName(driverClass);
+			
+			Connection conn = DriverManager.getConnection(urlDatabase, dbUsuario, dbPassword);
 			return conn;
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (SQLException e){
+		} catch (IOException e){
 			e.printStackTrace();
 		}
 		return null;
 	}
 	
-	private ResultSet selectConsulta(String sql){
-		
+	private ArrayList<Usuario> selectConsulta(String sql) throws SQLException{
+		Connection conn = null;
 		Statement st;
+		ResultSet rs = null;
 		try {
-			Connection conn = getConnection();
+			conn = getConnection();
 			st = conn.createStatement();
-			ResultSet rs  = st.executeQuery(sql);
-			conn.close();
-			return rs;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			rs  = st.executeQuery(sql);
+			if(rs != null){
+				ArrayList<Usuario> usuarios = new ArrayList<>();
+				try {
+					while(rs.next()){
+						Integer uId = rs.getInt("id");
+						String uNombre = rs.getString("nombre");
+						String uClave = rs.getString("clave");
+						String uEmail = rs.getString("email");
+
+						usuarios.add(new Usuario(uId, uNombre, uClave, uEmail));
+					}
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				return usuarios;
+				
+			}
+		}finally{
+			if(rs != null){
+				rs.close();
+			}	
+			if(conn != null){	
+				conn.close();
+			}
 		}
-		
 		return null;
 	}
 	
-private int updateConsulta(String sql){
-		
+private int updateConsulta(String sql) throws SQLException{
+		Connection conn = null;
 		Statement st;
 		try {
-			Connection conn = getConnection();
+			conn = getConnection();
 			st = conn.createStatement();
 			int i  = st.executeUpdate(sql);
-			conn.close();
 			return i;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} finally{
+			if(conn != null){	
+				conn.close();
+			}
 		}
-		
-		return 0;
+
 	}
+
+public void crearTabla() throws SQLException{
+	Connection conn = getConnection();
+	Statement st = conn.createStatement();
+	try {
+		st.executeUpdate("CREATE TABLE usuarios(id INT GENERATED ALWAYS AS IDENTITY, nombre VARCHAR(25), clave VARCHAR(25), email VARCHAR(50))");
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+}
 	
 }
