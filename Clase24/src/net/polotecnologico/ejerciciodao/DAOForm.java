@@ -11,14 +11,16 @@ import java.awt.FlowLayout;
 import java.awt.BorderLayout;
 import javax.swing.JButton;
 import javax.swing.JTextPane;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class DAOForm {
 
 	private JFrame frame;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
+	private JTextField textId;
+	private JTextField textNombre;
+	private JTextField textClave;
+	private JTextField textEmail;
 
 	/**
 	 * Launch the application.
@@ -71,44 +73,51 @@ public class DAOForm {
 		lblClave.setBounds(10, 61, 46, 14);
 		panelUsuario.add(lblClave);
 		
-		textField = new JTextField();
-		textField.setBounds(86, 8, 188, 20);
-		panelUsuario.add(textField);
-		textField.setColumns(10);
+		textId = new JTextField();
+		textId.setBounds(86, 8, 188, 20);
+		panelUsuario.add(textId);
+		textId.setColumns(10);
 		
 		JLabel lblEmail = new JLabel("Email:");
 		lblEmail.setBounds(10, 86, 46, 14);
 		panelUsuario.add(lblEmail);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(86, 33, 188, 20);
-		panelUsuario.add(textField_1);
-		textField_1.setColumns(10);
+		textNombre = new JTextField();
+		textNombre.setBounds(86, 33, 188, 20);
+		panelUsuario.add(textNombre);
+		textNombre.setColumns(10);
 		
-		textField_2 = new JTextField();
-		textField_2.setBounds(86, 58, 188, 20);
-		panelUsuario.add(textField_2);
-		textField_2.setColumns(10);
+		textClave = new JTextField();
+		textClave.setBounds(86, 58, 188, 20);
+		panelUsuario.add(textClave);
+		textClave.setColumns(10);
 		
-		textField_3 = new JTextField();
-		textField_3.setBounds(86, 83, 188, 20);
-		panelUsuario.add(textField_3);
-		textField_3.setColumns(10);
+		textEmail = new JTextField();
+		textEmail.setBounds(86, 83, 188, 20);
+		panelUsuario.add(textEmail);
+		textEmail.setColumns(10);
 		
 		JButton btnNuevo = new JButton("Nuevo");
 		btnNuevo.setBounds(26, 133, 89, 23);
 		panelUsuario.add(btnNuevo);
 		
 		JButton btnBuscar = new JButton("Buscar");
+		btnBuscar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(textI)
+			}
+		});
 		btnBuscar.setBounds(140, 133, 89, 23);
 		panelUsuario.add(btnBuscar);
 		
 		JButton btnBorrar = new JButton("Borrar");
 		btnBorrar.setBounds(377, 133, 89, 23);
+		btnBorrar.setEnabled(false);
 		panelUsuario.add(btnBorrar);
 		
 		JButton btnActualizar = new JButton("Actualizar");
 		btnActualizar.setBounds(265, 133, 89, 23);
+		btnActualizar.setEnabled(false);
 		panelUsuario.add(btnActualizar);
 		
 		JTextPane textPane = new JTextPane();
