@@ -15,53 +15,71 @@ import net.polotecnologico.ejerciciodao.Usuario;
 public class UsuarioDAOJDBC implements UsuarioDAO{
 	
 	@Override
-	public int create(Usuario usuario) throws SQLException{
+	public int create(Usuario usuario) throws DAOUsuarioException{
 		String sql = "INSERT INTO usuarios(nombre, clave, email) VALUES('" + 
 				usuario.getNombre() + 
 				"','" + usuario.getClave()+ 
 				"','" + usuario.getEmail() + 
 				"')";
-		return updateConsulta(sql);
+		try {
+			return updateConsulta(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DAOUsuarioException("Error creando el usuario");
+		}
 	}	
 
 	@Override
-	public int update(Usuario usuario) throws SQLException {
+	public int update(Usuario usuario) throws DAOUsuarioException {
 		String sql = "UPDATE USUARIOS SET " + 
 				"nombre='" + usuario.getNombre() + 
 				"', clave='" + usuario.getClave()+ 
 				"', email='" + usuario.getEmail() + 
 				"' WHERE id=" + usuario.getId();
-		return updateConsulta(sql);
+		try {
+			return updateConsulta(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			new DAOUsuarioException("Error actualizando usuario");
+		}
+		return 0;
 	}
 
 	@Override
-	public int delete(Usuario usuario) throws SQLException {
-		String sql = "DELETE FROM USUARIO WHERE id=" + usuario.getId();
-		return updateConsulta(sql);
-	}
-
-	@Override
-	public int deleteByNombre(String nombre) throws SQLException {
-		String sql = "DELETE FROM USUARIO WHERE nombre LIKE '%" + nombre + "%'";
-		return updateConsulta(sql);
-	}
-
-	@Override
-	public int deleteByID(Integer id) throws SQLException {
+	public int deleteByID(Integer id) throws DAOUsuarioException {
 		String sql = "DELETE FROM usuarios WHERE id =" + id;
-		return updateConsulta(sql);
+		try {
+			return updateConsulta(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			new DAOUsuarioException("Error eliminando usuario");
+		}
+		return 0;
 	}
 
 	@Override
-	public ArrayList<Usuario> getUsuarioByName(String nombre) throws SQLException {
-		String sql = "SELECT * FROM usuarios WHERE nombre LIKE '%" + nombre + "%'";
-		return selectConsulta(sql);
+	public ArrayList<Usuario> getUsuarioByName(String nombre) throws DAOUsuarioException {
+		String sql = "SELECT * FROM usuarios WHERE nombre LIKE '" + nombre + "'";
+		try {
+			return selectConsulta(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DAOUsuarioException("Error buscando usuarios");
+		}
 	}
 
 	@Override
-	public Usuario getUsuarioById(Integer id) throws SQLException {
+	public Usuario getUsuarioById(Integer id) throws DAOUsuarioException {
 		String sql = "SELECT * FROM usuarios WHERE id=" + id;
-		return selectConsulta(sql).get(0);
+		try {
+			return selectConsulta(sql).get(0);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DAOUsuarioException("Error obteniendo usuario");
+		} catch (IndexOutOfBoundsException e){
+			e.printStackTrace();
+		}
+		return null;
 
 	}
 
@@ -88,16 +106,15 @@ public class UsuarioDAOJDBC implements UsuarioDAO{
 	}
 	
 	private ArrayList<Usuario> selectConsulta(String sql) throws SQLException{
-		Connection conn = null;
-		Statement st;
 		ResultSet rs = null;
-		try {
-			conn = getConnection();
-			st = conn.createStatement();
+		
+		try (Connection conn = getConnection();
+				Statement st = conn.createStatement();){
+			
+			
 			rs  = st.executeQuery(sql);
 			if(rs != null){
 				ArrayList<Usuario> usuarios = new ArrayList<>();
-				try {
 					while(rs.next()){
 						Integer uId = rs.getInt("id");
 						String uNombre = rs.getString("nombre");
@@ -106,45 +123,28 @@ public class UsuarioDAOJDBC implements UsuarioDAO{
 
 						usuarios.add(new Usuario(uId, uNombre, uClave, uEmail));
 					}
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
 				return usuarios;
 				
-			}
-		}finally{
-			if(rs != null){
-				rs.close();
-			}	
-			if(conn != null){	
-				conn.close();
 			}
 		}
 		return null;
 	}
 	
 private int updateConsulta(String sql) throws SQLException{
-		Connection conn = null;
 		Statement st;
-		try {
-			conn = getConnection();
+		try (Connection conn = getConnection()){
 			st = conn.createStatement();
 			int i  = st.executeUpdate(sql);
 			return i;
-		} finally{
-			if(conn != null){	
-				conn.close();
-			}
 		}
 
 	}
 
-public void crearTabla() throws SQLException{
-	Connection conn = getConnection();
-	Statement st = conn.createStatement();
-	try {
+public void crearTabla(){
+	
+	Statement st;
+	try(Connection conn = getConnection();) {
+		st = conn.createStatement();
 		st.executeUpdate("CREATE TABLE usuarios(id INT GENERATED ALWAYS AS IDENTITY, nombre VARCHAR(25), clave VARCHAR(25), email VARCHAR(50))");
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block

@@ -8,12 +8,10 @@ import net.polotecnologico.ejerciciodao.Usuario;
 public interface UsuarioDAO {
 
 	void crearTabla() throws SQLException;
-	int create(Usuario usuario) throws SQLException;
-	int update(Usuario usuario) throws SQLException;
-	int delete(Usuario usuario) throws SQLException;
-	int deleteByNombre(String nombre) throws SQLException;
-	int deleteByID(Integer id) throws SQLException;
-	ArrayList<Usuario> getUsuarioByName(String nombre) throws SQLException;
-	Usuario getUsuarioById(Integer id) throws SQLException;
+	int create(Usuario usuario) throws DAOUsuarioException;
+	int update(Usuario usuario) throws DAOUsuarioException;
+	int deleteByID(Integer id) throws DAOUsuarioException;
+	ArrayList<Usuario> getUsuarioByName(String nombre) throws DAOUsuarioException;
+	Usuario getUsuarioById(Integer id) throws DAOUsuarioException;
 	
 }
