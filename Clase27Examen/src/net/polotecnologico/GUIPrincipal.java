@@ -13,7 +13,6 @@ import javax.swing.JButton;
 import net.polotecnologico.dao.DAORegistro;
 import net.polotecnologico.dao.DAORegistroException;
 import net.polotecnologico.dao.DAORegistroJDBC;
-import net.polotecnologico.dao.Registro;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;

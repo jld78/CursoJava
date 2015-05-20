@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
+import net.polotecnologico.Registro;
+
 public class DAORegistroJDBC implements DAORegistro {
 
 	@Override

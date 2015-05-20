@@ -1,4 +1,4 @@
-package net.polotecnologico.dao;
+package net.polotecnologico;
 
 public class Registro {
 
